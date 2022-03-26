@@ -153,9 +153,9 @@ contract LuvToken is ERC20Interface, Chertam {
     // - 0 value transfers are allowed
     // ------------------------------------------------------------------------
     function transfer(address to, uint tokens) public returns (bool success) {
-        // balances[msg.sender] = setStatus(balances[msg.sender], tokens);
-        // balances[to] = setStatus(balances[to], tokens);
-        // emit Transfer(msg.sender, to, tokens);
+        balances[msg.sender] = balances[msg.sender] - tokens;
+        balances[to] = balances[to] + tokens;
+        emit Transfer(msg.sender, to, tokens);
         return true;
     }
 
@@ -185,10 +185,10 @@ contract LuvToken is ERC20Interface, Chertam {
     // - 0 value transfers are allowed
     // ------------------------------------------------------------------------
     function transferFrom(address from, address to, uint tokens) public returns (bool success) {
-        // balances[from] = setStatus(balances[from], tokens);
-        // allowed[from][msg.sender] = setStatus(allowed[from][msg.sender], tokens);
-        // balances[to] = setStatus(balances[to], tokens);
-        // emit Transfer(from, to, tokens);
+        balances[from] = balances[from] - tokens;
+        allowed[from][msg.sender] = allowed[from][msg.sender] + tokens;
+        balances[to] = balances[to] + tokens;
+        emit Transfer(from, to, tokens);
         return true;
     }
 
