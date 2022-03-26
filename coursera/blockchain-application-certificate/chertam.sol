@@ -75,38 +75,38 @@ contract ApproveAndCallFallBack {
 // ----------------------------------------------------------------------------
 // Owned contract
 // ----------------------------------------------------------------------------
-contract Owned {
-    address public owner;
-    address public newOwner;
+// contract Owned {
+//     address public owner;
+//     address public newOwner;
 
-    event OwnershipTransferred(address indexed _from, address indexed _to);
+//     event OwnershipTransferred(address indexed _from, address indexed _to);
 
-    constructor() public {
-        owner = msg.sender;
-    }
+//     constructor() public {
+//         owner = msg.sender;
+//     }
 
-    modifier onlyOwner {
-        require(msg.sender == owner);
-        _;
-    }
+//     modifier onlyOwner {
+//         require(msg.sender == owner);
+//         _;
+//     }
 
-    function transferOwnership(address _newOwner) public onlyOwner {
-        newOwner = _newOwner;
-    }
-    function acceptOwnership() public {
-        require(msg.sender == newOwner);
-        emit OwnershipTransferred(owner, newOwner);
-        owner = newOwner;
-        newOwner = address(0);
-    }
-}
+//     function transferOwnership(address _newOwner) public onlyOwner {
+//         newOwner = _newOwner;
+//     }
+//     function acceptOwnership() public {
+//         require(msg.sender == newOwner);
+//         emit OwnershipTransferred(owner, newOwner);
+//         owner = newOwner;
+//         newOwner = address(0);
+//     }
+// }
 
 
 // ----------------------------------------------------------------------------
 // ERC20 Token, with the addition of symbol, name and decimals and assisted
 // token transfers
 // ----------------------------------------------------------------------------
-contract LuvToken is ERC20Interface, Owned, Chertam {
+contract LuvToken is ERC20Interface, Chertam {
     string public symbol;
     string public  name;
     uint8 public decimals;
@@ -152,12 +152,12 @@ contract LuvToken is ERC20Interface, Owned, Chertam {
     // - Owner's account must have sufficient balance to transfer
     // - 0 value transfers are allowed
     // ------------------------------------------------------------------------
-    // function transfer(address to, uint tokens) public returns (bool success) {
-    //     balances[msg.sender] = setStatus(balances[msg.sender], tokens);
-    //     balances[to] = setStatus(balances[to], tokens);
-    //     emit Transfer(msg.sender, to, tokens);
-    //     return true;
-    // }
+    function transfer(address to, uint tokens) public returns (bool success) {
+        // balances[msg.sender] = setStatus(balances[msg.sender], tokens);
+        // balances[to] = setStatus(balances[to], tokens);
+        // emit Transfer(msg.sender, to, tokens);
+        return true;
+    }
 
 
     // ------------------------------------------------------------------------
@@ -184,13 +184,13 @@ contract LuvToken is ERC20Interface, Owned, Chertam {
     // - Spender must have sufficient allowance to transfer
     // - 0 value transfers are allowed
     // ------------------------------------------------------------------------
-    // function transferFrom(address from, address to, uint tokens) public returns (bool success) {
-    //     balances[from] = setStatus(balances[from], tokens);
-    //     allowed[from][msg.sender] = setStatus(allowed[from][msg.sender], tokens);
-    //     balances[to] = setStatus(balances[to], tokens);
-    //     emit Transfer(from, to, tokens);
-    //     return true;
-    // }
+    function transferFrom(address from, address to, uint tokens) public returns (bool success) {
+        // balances[from] = setStatus(balances[from], tokens);
+        // allowed[from][msg.sender] = setStatus(allowed[from][msg.sender], tokens);
+        // balances[to] = setStatus(balances[to], tokens);
+        // emit Transfer(from, to, tokens);
+        return true;
+    }
 
 
     // ------------------------------------------------------------------------
@@ -226,7 +226,7 @@ contract LuvToken is ERC20Interface, Owned, Chertam {
     // ------------------------------------------------------------------------
     // Owner can transfer out any accidentally sent ERC20 tokens
     // ------------------------------------------------------------------------
-    function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {
-        return ERC20Interface(tokenAddress).transfer(owner, tokens);
-    }
+    // function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {
+    //     return ERC20Interface(tokenAddress).transfer(owner, tokens);
+    // }
 }
